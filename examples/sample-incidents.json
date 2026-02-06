@@ -1,0 +1,125 @@
+{
+  "description": "Sample incident requests for testing the Autonomous Incident Analyst API",
+  "examples": [
+    {
+      "name": "Memory (OOM) Error",
+      "request": {
+        "logs": "[ERROR] 2024-02-06 10:23:45 - Container killed: OOMKilled\n[ERROR] Memory usage exceeded limit: 512Mi\n[WARN] Pod api-server-7d8f9 restarting\n[INFO] Container restarted successfully\n[ERROR] Application crash due to memory constraints",
+        "metrics": "Memory: 512Mi/512Mi (100%)\nCPU: 85%\nRestarts: 5\nUptime: 2m"
+      },
+      "expected_causes": [
+        "Memory limit exceeded",
+        "Memory leak in application",
+        "Insufficient container resources"
+      ]
+    },
+    {
+      "name": "Database Connection Error",
+      "request": {
+        "logs": "[ERROR] 2024-02-06 14:12:33 - Connection refused: ECONNREFUSED 10.0.0.45:5432\n[ERROR] Database connection failed\n[WARN] Retrying connection in 5s\n[ERROR] Max retries exceeded\n[ERROR] PostgreSQL connection timeout",
+        "metrics": "Active connections: 0/100\nConnection pool: exhausted\nLatency: N/A"
+      },
+      "expected_causes": [
+        "Database service down",
+        "Network policy blocking connection",
+        "Incorrect service endpoint"
+      ]
+    },
+    {
+      "name": "Request Timeout",
+      "request": {
+        "logs": "[ERROR] 2024-02-06 11:45:22 - Request timeout after 30000ms\n[WARN] Upstream service slow response\n[ERROR] Circuit breaker opened for payment-service\n[INFO] Fallback response returned\n[ERROR] Multiple requests timing out",
+        "metrics": "P99 latency: 45s\nError rate: 23%\nCircuit breaker: OPEN\nRequests/min: 1200"
+      },
+      "expected_causes": [
+        "Downstream service performance degradation",
+        "Slow downstream service",
+        "Resource contention"
+      ]
+    },
+    {
+      "name": "Disk Space Critical",
+      "request": {
+        "logs": "[ERROR] 2024-02-06 15:30:45 - Disk space critical\n[ERROR] / partition at 98% capacity\n[WARN] Log rotation failed\n[ERROR] Cannot write to disk\n[ERROR] No space left on device\n[WARN] Multiple services affected",
+        "metrics": "Disk usage: 98%\nInodes: 450k/500k\nWrite errors: 15\nRead errors: 0"
+      },
+      "expected_causes": [
+        "Disk space exhausted",
+        "Log files growing unbounded",
+        "Large temporary files"
+      ]
+    },
+    {
+      "name": "Permission Denied Error",
+      "request": {
+        "logs": "[ERROR] 2024-02-06 09:15:20 - Permission denied accessing S3 bucket\n[ERROR] AccessDenied: User does not have s3:GetObject permission\n[WARN] Failed to retrieve configuration file\n[ERROR] Application cannot start without config\n[ERROR] IAM role missing required permissions",
+        "metrics": "Failed requests: 45\nHTTP 403 errors: 45\nSuccess rate: 0%"
+      },
+      "expected_causes": [
+        "Missing IAM permissions",
+        "Incorrect service account",
+        "RBAC misconfiguration"
+      ]
+    },
+    {
+      "name": "Application Crash",
+      "request": {
+        "logs": "[ERROR] 2024-02-06 16:45:10 - Segmentation fault (core dumped)\n[ERROR] Process terminated with signal SIGSEGV\n[WARN] Application crashed unexpectedly\n[ERROR] Stack trace: null pointer dereference at 0x00000000\n[INFO] Core dump saved to /var/core/app.core",
+        "metrics": "Crash count: 3\nUptime before crash: 15m\nMemory at crash: 256Mi\nCPU at crash: 45%"
+      },
+      "expected_causes": [
+        "Application bug",
+        "Null pointer exception",
+        "Stack overflow"
+      ]
+    },
+    {
+      "name": "Certificate Expiration",
+      "request": {
+        "logs": "[ERROR] 2024-02-06 08:00:15 - SSL certificate has expired\n[ERROR] TLS handshake failed: certificate verify failed\n[WARN] Cannot establish secure connection\n[ERROR] x509: certificate has expired or is not yet valid\n[WARN] All HTTPS requests failing",
+        "metrics": "SSL errors: 156\nFailed handshakes: 156\nHTTPS success rate: 0%\nCertificate valid until: 2024-02-05"
+      },
+      "expected_causes": [
+        "SSL/TLS certificate expired",
+        "Certificate renewal failed",
+        "Certificate not rotated"
+      ]
+    },
+    {
+      "name": "Rate Limiting",
+      "request": {
+        "logs": "[WARN] 2024-02-06 13:22:40 - Rate limit exceeded\n[ERROR] HTTP 429 Too Many Requests\n[INFO] Throttling client requests\n[WARN] 1500 requests in 60 seconds exceeds limit of 1000\n[ERROR] Multiple clients experiencing delays",
+        "metrics": "Requests/min: 1500\nRate limit: 1000/min\nThrottled requests: 500\n429 errors: 500"
+      },
+      "expected_causes": [
+        "Traffic spike exceeding rate limits",
+        "Insufficient rate limit configuration",
+        "DDoS or abuse attempt"
+      ]
+    },
+    {
+      "name": "Network Timeout",
+      "request": {
+        "logs": "[ERROR] 2024-02-06 12:10:30 - Network timeout: no response from 10.0.1.50:8080\n[WARN] Connection attempt timed out after 10s\n[ERROR] Unable to reach downstream service\n[INFO] Retry attempt 3/3 failed\n[ERROR] Service mesh reports destination unreachable",
+        "metrics": "Timeout errors: 28\nNetwork latency: >10s\nPacket loss: 15%\nConnection attempts: 84"
+      },
+      "expected_causes": [
+        "Network latency issues",
+        "Firewall blocking traffic",
+        "Service mesh misconfiguration"
+      ]
+    },
+    {
+      "name": "Configuration Error",
+      "request": {
+        "logs": "[ERROR] 2024-02-06 07:30:12 - Invalid configuration: missing required field 'database_url'\n[ERROR] Application failed to start\n[WARN] Configuration file malformed or incomplete\n[ERROR] Environment variable DATABASE_URL not set\n[INFO] Using default config failed - required fields missing",
+        "metrics": "Start attempts: 10\nSuccessful starts: 0\nConfig errors: 10\nMissing vars: 3"
+      },
+      "expected_causes": [
+        "Missing environment variables",
+        "Invalid configuration file",
+        "Configuration not loaded properly"
+      ]
+    }
+  ]
+}
