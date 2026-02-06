@@ -73,6 +73,41 @@ async def root():
     return {"status": "healthy", "service": "Autonomous Incident Analyst"}
 
 
+@app.get("/health")
+async def health_check():
+    """
+    Comprehensive health check with system status.
+    Returns detailed health information about the service.
+    """
+    incidents = memory.load_incidents()
+    resolved_count = len([i for i in incidents if i.get("status") == "resolved"])
+    open_count = len([i for i in incidents if i.get("status") == "open"])
+    
+    has_api_key = bool(llm.YOU_API_KEY)
+    
+    return {
+        "status": "healthy",
+        "service": "Autonomous Incident Analyst",
+        "version": "1.0.0",
+        "components": {
+            "api": "operational",
+            "memory": "operational",
+            "llm": "operational" if has_api_key else "fallback_mode"
+        },
+        "statistics": {
+            "total_incidents": len(incidents),
+            "resolved_incidents": resolved_count,
+            "open_incidents": open_count
+        },
+        "features": {
+            "llm_integration": has_api_key,
+            "pattern_matching": True,
+            "incident_memory": True,
+            "similarity_search": True
+        }
+    }
+
+
 @app.get("/incidents")
 async def list_incidents():
     """List all incidents."""
