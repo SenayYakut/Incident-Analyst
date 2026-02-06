@@ -1,0 +1,36 @@
+# Render Blueprint - Infrastructure as Code
+# Deploy with: Connect GitHub repo to Render
+
+services:
+  # Backend API
+  - type: web
+    name: incident-analyst-api
+    runtime: python
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: YOU_API_KEY
+        sync: false
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+  # Frontend
+  - type: web
+    name: incident-analyst-web
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: incident-analyst-api
+          property: hostURL
+      - key: NODE_VERSION
+        value: 20.11.0

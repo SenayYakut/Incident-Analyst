@@ -1,0 +1,111 @@
+[
+  {
+    "id": 1,
+    "logs": "[ERROR] Container killed: OOMKilled\n[ERROR] Memory usage exceeded limit: 512Mi\n[WARN] Pod api-server restarting",
+    "metrics": "Memory: 512Mi/512Mi (100%)\nCPU: 45%",
+    "suspected_root_causes": [
+      "Memory limit exceeded",
+      "Memory leak in application"
+    ],
+    "attempted_fixes": [
+      {
+        "fix": "Increased memory limit to 1Gi",
+        "applied_at": "2024-01-15T09:00:00"
+      }
+    ],
+    "status": "resolved",
+    "created_at": "2024-01-15T08:30:00",
+    "updated_at": "2024-01-15T10:00:00",
+    "resolution_notes": "Increased memory limit and fixed memory leak"
+  },
+  {
+    "id": 2,
+    "logs": "[ERROR] Connection refused: ECONNREFUSED 10.0.0.45:5432\n[ERROR] Database connection failed",
+    "metrics": "Active connections: 0",
+    "suspected_root_causes": [
+      "Database service down",
+      "Network policy blocking"
+    ],
+    "attempted_fixes": [
+      {
+        "fix": "Restarted database pod",
+        "applied_at": "2024-01-20T14:30:00"
+      }
+    ],
+    "status": "resolved",
+    "created_at": "2024-01-20T14:15:00",
+    "updated_at": "2024-01-20T15:00:00",
+    "resolution_notes": "Database pod was down. Restarted and cleaned disk space."
+  },
+  {
+    "id": 3,
+    "logs": "[ERROR] CrashLoopBackOff for pod payment-worker\n[ERROR] Container exited with code 1",
+    "metrics": "Restarts: 15",
+    "suspected_root_causes": [
+      "Missing environment variable",
+      "Configuration error"
+    ],
+    "attempted_fixes": [
+      {
+        "fix": "Added missing DATABASE_URL",
+        "applied_at": "2024-02-01T10:00:00"
+      }
+    ],
+    "status": "resolved",
+    "created_at": "2024-02-01T09:30:00",
+    "updated_at": "2024-02-01T10:30:00",
+    "resolution_notes": "Missing DATABASE_URL env var in deployment"
+  },
+  {
+    "id": 4,
+    "logs": "[ERROR] ImagePullBackOff\n[ERROR] Failed to pull image: unauthorized",
+    "metrics": "Image: gcr.io/myproject/frontend:v2.1.0",
+    "suspected_root_causes": [
+      "Missing registry credentials",
+      "Invalid image tag"
+    ],
+    "attempted_fixes": [
+      {
+        "fix": "Created imagePullSecret",
+        "applied_at": "2024-02-03T11:00:00"
+      }
+    ],
+    "status": "resolved",
+    "created_at": "2024-02-03T10:45:00",
+    "updated_at": "2024-02-03T11:30:00",
+    "resolution_notes": "Added imagePullSecrets for private registry"
+  },
+  {
+    "id": 5,
+    "logs": "[ERROR] Request timeout after 30000ms\n[ERROR] Circuit breaker opened",
+    "metrics": "P99 latency: 45s\nError rate: 23%",
+    "suspected_root_causes": [
+      "Slow database query",
+      "Resource contention"
+    ],
+    "attempted_fixes": [
+      {
+        "fix": "Added database index",
+        "applied_at": "2024-02-05T14:00:00"
+      }
+    ],
+    "status": "resolved",
+    "created_at": "2024-02-05T13:30:00",
+    "updated_at": "2024-02-05T14:30:00",
+    "resolution_notes": "Added index on orders.customer_id column"
+  },
+  {
+    "id": 6,
+    "logs": "fix the error\n",
+    "metrics": "",
+    "suspected_root_causes": [
+      "Unknown error",
+      "Requires investigation"
+    ],
+    "attempted_fixes": [],
+    "status": "resolved",
+    "created_at": "2026-02-06T13:53:58.002313",
+    "updated_at": "2026-02-06T13:54:08.361942",
+    "resolution_notes": "Resolved via suggested fixes"
+  }
+]
