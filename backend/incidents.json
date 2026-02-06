@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "logs": "[ERROR] 2024-01-15 08:23:45 - Container killed: OOMKilled\n[ERROR] Memory usage exceeded limit: 512Mi\n[WARN] Pod api-server-7d8f9 restarting\n[INFO] Container restarted successfully",
+    "metrics": "Memory: 512Mi/512Mi (100%)\nCPU: 45%\nRestarts: 3",
+    "suspected_root_causes": ["Memory limit exceeded", "Possible memory leak in application"],
+    "attempted_fixes": [
+      {"fix": "Increased memory limit to 1Gi", "applied_at": "2024-01-15T09:00:00"}
+    ],
+    "status": "resolved",
+    "created_at": "2024-01-15T08:30:00",
+    "updated_at": "2024-01-15T10:00:00",
+    "resolution_notes": "Increased memory limit and identified memory leak in image processing module"
+  },
+  {
+    "id": 2,
+    "logs": "[ERROR] 2024-01-20 14:12:33 - Connection refused: ECONNREFUSED 10.0.0.45:5432\n[ERROR] Database connection failed\n[WARN] Retrying connection in 5s\n[ERROR] Max retries exceeded",
+    "metrics": "Active connections: 0\nConnection pool: exhausted",
+    "suspected_root_causes": ["Database service down", "Network policy blocking connection"],
+    "attempted_fixes": [
+      {"fix": "Restarted database pod", "applied_at": "2024-01-20T14:30:00"}
+    ],
+    "status": "resolved",
+    "created_at": "2024-01-20T14:15:00",
+    "updated_at": "2024-01-20T15:00:00",
+    "resolution_notes": "Database pod was in CrashLoopBackOff due to disk space. Cleaned up old data."
+  },
+  {
+    "id": 3,
+    "logs": "[ERROR] 2024-02-01 11:45:22 - Request timeout after 30000ms\n[WARN] Upstream service slow response\n[ERROR] Circuit breaker opened for payment-service\n[INFO] Fallback response returned",
+    "metrics": "P99 latency: 45s\nError rate: 23%\nCircuit breaker: OPEN",
+    "suspected_root_causes": ["Downstream service performance degradation", "Resource contention"],
+    "attempted_fixes": [
+      {"fix": "Increased timeout to 60s", "applied_at": "2024-02-01T12:00:00"},
+      {"fix": "Scaled payment-service replicas from 2 to 4", "applied_at": "2024-02-01T12:30:00"}
+    ],
+    "status": "resolved",
+    "created_at": "2024-02-01T11:50:00",
+    "updated_at": "2024-02-01T13:00:00",
+    "resolution_notes": "Payment service had a slow database query. Added index to payments table."
+  }
+]
